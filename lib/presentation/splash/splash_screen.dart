@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:student/constant/color/colors.dart';
 import 'package:student/constant/size/sized_box.dart';
 import 'package:student/presentation/home/home_screen.dart';
 import 'package:student/presentation/splash/widget/animation.dart';
@@ -89,7 +90,7 @@ class _SplashScreenState extends State<SplashScreen> {
                   style: TextStyle(
                     fontWeight: FontWeight.w600,
                     fontSize: 35,
-                    color: Colors.blue,
+                    color: kblack,
                   ),
                 ),
               ),
