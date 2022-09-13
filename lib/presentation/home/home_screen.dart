@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:student/constant/color/colors.dart';
 import 'package:student/constant/size/sized_box.dart';
 import 'package:student/presentation/form_widget/form_widget.dart';
+import 'package:student/widget/delete_show_dialog.dart';
 
 class HomeSceen extends StatelessWidget {
   const HomeSceen({Key? key}) : super(key: key);
@@ -41,22 +42,33 @@ class HomeSceen extends StatelessWidget {
         ],
       ),
       body: ListView.separated(
-        itemCount: 10,
+        itemCount: 5,
         separatorBuilder: (BuildContext context, int index) {
-          return kheight5;
+          return const SizedBox();
         },
         itemBuilder: (BuildContext context, int index) {
           return Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
+            padding: EdgeInsets.only(
+              top: 10.h,
+              right: 10.w,
+              left: 10.w,
+            ),
             child: Container(
               height: 80,
               decoration: BoxDecoration(
-                border: Border.all(width: 3.0,color: kblack),
+                border: Border.all(width: 3.0, color: kblack),
                 borderRadius: const BorderRadius.all(
                   Radius.circular(20),
                 ),
               ),
               child: ListTile(
+                onTap: () {},
+                onLongPress: () {
+                  showDialog(
+                    context: context,
+                    builder: (ctx) => const DeleteDialogWidget(),
+                  );
+                },
                 leading: const CircleAvatar(
                   radius: 30,
                 ),
@@ -65,6 +77,29 @@ class HomeSceen extends StatelessWidget {
                 ),
                 subtitle: Text(
                   'SubTitle ${index + 1} ',
+                ),
+                trailing: Wrap(
+                  children: [
+                    IconButton(
+                      padding: EdgeInsets.zero,
+                      onPressed: () {},
+                      icon: const Icon(
+                        Icons.edit,
+                      ),
+                    ),
+                    IconButton(
+                      padding: EdgeInsets.zero,
+                      onPressed: () {
+                        showDialog(
+                          context: context,
+                          builder: (ctx) => const DeleteDialogWidget(),
+                        );
+                      },
+                      icon: const Icon(
+                        Icons.delete,
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),
