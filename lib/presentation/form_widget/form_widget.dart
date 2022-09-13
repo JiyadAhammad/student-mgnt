@@ -27,9 +27,33 @@ class Formwidget extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              const CircleAvatar(
-                radius: 80,
-                backgroundColor: kblack,
+              SizedBox(
+                height: 200,
+                width: 200,
+                child: Stack(
+                  clipBehavior: Clip.none,
+                  fit: StackFit.expand,
+                  children: [
+                    const CircleAvatar(
+                      backgroundImage: AssetImage('asset/lottie/add.json'),
+                    ),
+                    Positioned(
+                      bottom: 10,
+                      right: -10,
+                      child: RawMaterialButton(
+                        onPressed: () {},
+                        elevation: 2.0,
+                        fillColor: const Color(0xFFF5F6F9),
+                        padding: const EdgeInsets.all(15.0),
+                        shape: const CircleBorder(),
+                        child: const Icon(
+                          Icons.camera_alt_outlined,
+                          color: Colors.blue,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
               kheight20,
               TextFormWidget(
@@ -67,7 +91,9 @@ class Formwidget extends StatelessWidget {
                       style: ButtonStyle(
                           backgroundColor:
                               MaterialStateProperty.all(Colors.blueGrey)),
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
                       child: const Text(
                         'Cancel',
                       ),
