@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:student/constant/color/colors.dart';
-import 'package:student/presentation/form_widget/form_widget.dart';
+import 'package:student/presentation/student_details/student_details.dart';
+import 'package:student/widget/app_bar_widget.dart';
 
 class HomeSceen extends StatelessWidget {
   const HomeSceen({Key? key}) : super(key: key);
@@ -11,34 +12,9 @@ class HomeSceen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: kwhite,
-      appBar: AppBar(
-        backgroundColor: kblack,
-        title: const Text(
-          'Home',
-        ),
-        centerTitle: true,
-        actions: [
-          IconButton(
-            padding: EdgeInsets.zero,
-            onPressed: () {},
-            icon: const Icon(
-              Icons.search,
-            ),
-          ),
-          IconButton(
-            padding: EdgeInsets.zero,
-            onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (ctx) => const Formwidget(),
-                ),
-              );
-            },
-            icon: const Icon(
-              Icons.add,
-            ),
-          ),
-        ],
+      appBar: const PreferredSize(
+        preferredSize: Size.fromHeight(50),
+        child: AppBarWidget(title: 'Home'),
       ),
       body: ListView.separated(
         itemCount: 5,
@@ -61,7 +37,15 @@ class HomeSceen extends StatelessWidget {
                 ),
               ),
               child: ListTile(
-                onTap: () {},
+                onTap: () {
+                  Get.to(
+                    transition: Transition.downToUp,
+                    duration: const Duration(
+                      milliseconds: 800,
+                    ),
+                    const StudentDetail(),
+                  );
+                },
                 // onLongPress: () {
                 //   // showDialog(
                 //   //   context: context,
@@ -104,13 +88,13 @@ class HomeSceen extends StatelessWidget {
                           backgroundColor: kblack,
                           textConfirm: 'Ok',
                           confirmTextColor: kblack,
-                          onConfirm: () {
-                            Get.back();
-                          },
+                          onConfirm: () {},
                           buttonColor: kwhite,
                           textCancel: 'Cancel',
                           cancelTextColor: kwhite,
-                          onCancel: () {},
+                          onCancel: () {
+                            Get.back();
+                          },
                           barrierDismissible: false,
                         );
                       },

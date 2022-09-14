@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:student/constant/color/colors.dart';
 import 'package:student/constant/size/sized_box.dart';
 import 'package:student/presentation/form_widget/widget/text_form_widget.dart';
@@ -8,6 +9,12 @@ final nameController = TextEditingController();
 final ageController = TextEditingController();
 final domainController = TextEditingController();
 final phoneController = TextEditingController();
+
+final picker = ImagePicker();
+//  // Pick an image
+//     final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+//     // Capture a photo
+//     final XFile? photo = await picker.pickImage(source: ImageSource.camera);
 
 class Formwidget extends StatelessWidget {
   const Formwidget({Key? key}) : super(key: key);
@@ -36,7 +43,8 @@ class Formwidget extends StatelessWidget {
                   fit: StackFit.expand,
                   children: [
                     const CircleAvatar(
-                      backgroundImage: AssetImage('asset/lottie/add.json'),
+                      // backgroundImage: AssetImage(''),
+                      backgroundColor: kblack,
                     ),
                     Positioned(
                       bottom: 10,
@@ -47,45 +55,78 @@ class Formwidget extends StatelessWidget {
                             SizedBox(
                               height: 120,
                               child: Wrap(
+                                direction: Axis.horizontal,
                                 children: [
                                   ListTile(
-                                    onTap: () {},
+                                    onTap: () async {
+                                      // Capture a photo
+                                      final XFile? photo =
+                                          await picker.pickImage(
+                                              source: ImageSource.camera);
+                                    },
                                     leading: const Icon(
                                       Icons.add_a_photo,
                                       color: kwhite,
                                     ),
                                     title: const Text(
-                                      'camera',
+                                      'Camera',
                                       style: TextStyle(
                                         color: kwhite,
                                       ),
                                     ),
                                   ),
                                   ListTile(
-                                    onTap: () {},
+                                    onTap: () async {
+                                      // Pick an image
+                                      final XFile? image =
+                                          await picker.pickImage(
+                                              source: ImageSource.gallery);
+                                    },
                                     leading: const Icon(
                                       Icons.collections,
                                       color: kwhite,
                                     ),
                                     title: const Text(
-                                      'Gallery',
+                                      'Galley',
                                       style: TextStyle(
                                         color: kwhite,
                                       ),
                                     ),
                                   ),
+                                  // BottomSheetWidget(
+                                  //   icon: Icons.add_a_photo,
+                                  //   nameIcon: 'Camera',
+                                  // ),
+                                  // BottomSheetWidget(
+                                  //   icon: Icons.collections,
+                                  //   nameIcon: 'Galley',
+                                  // )
+                                  // ListTile(
+                                  //   onTap: () {},
+                                  //   leading: const Icon(
+                                  //     Icons.collections,
+                                  //     color: kwhite,
+                                  //   ),
+                                  //   title: const Text(
+                                  //     'Gallery',
+                                  //     style: TextStyle(
+                                  //       color: kwhite,
+                                  //     ),
+                                  //   ),
+                                  // ),
                                 ],
                               ),
                             ),
                             // barrierColor: kgrey,
                             backgroundColor: kblack,
                             shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
-                                side: const BorderSide(
-                                  color: kwhite,
-                                  style: BorderStyle.solid,
-                                  width: 2.0,
-                                )),
+                              borderRadius: BorderRadius.circular(10),
+                              side: const BorderSide(
+                                color: kwhite,
+                                style: BorderStyle.solid,
+                                width: 2.0,
+                              ),
+                            ),
                           );
                         },
                         elevation: 2.0,
@@ -140,7 +181,7 @@ class Formwidget extends StatelessWidget {
                         ),
                       ),
                       onPressed: () {
-                        Navigator.pop(context);
+                        Get.back();
                       },
                       child: const Text(
                         'Cancel',
@@ -151,6 +192,11 @@ class Formwidget extends StatelessWidget {
                   SizedBox(
                     width: 150,
                     child: ElevatedButton(
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all(
+                          kblack,
+                        ),
+                      ),
                       onPressed: () {},
                       child: const Text(
                         'ok',
@@ -161,6 +207,33 @@ class Formwidget extends StatelessWidget {
               ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class BottomSheetWidget extends StatelessWidget {
+  final IconData icon;
+  final String nameIcon;
+  const BottomSheetWidget({
+    Key? key,
+    required this.icon,
+    required this.nameIcon,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      onTap: () {},
+      leading: Icon(
+        icon,
+        color: kwhite,
+      ),
+      title: Text(
+        nameIcon,
+        style: const TextStyle(
+          color: kwhite,
         ),
       ),
     );

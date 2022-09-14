@@ -1,9 +1,7 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:student/constant/color/colors.dart';
-import 'package:student/constant/size/sized_box.dart';
 import 'package:student/presentation/home/home_screen.dart';
 import 'package:student/presentation/splash/widget/animation.dart';
 
