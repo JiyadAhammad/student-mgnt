@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:student/constant/color/colors.dart';
 import 'package:student/constant/size/sized_box.dart';
 import 'package:student/presentation/form_widget/widget/text_form_widget.dart';
@@ -41,7 +42,52 @@ class Formwidget extends StatelessWidget {
                       bottom: 10,
                       right: -10,
                       child: RawMaterialButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Get.bottomSheet(
+                            SizedBox(
+                              height: 120,
+                              child: Wrap(
+                                children: [
+                                  ListTile(
+                                    onTap: () {},
+                                    leading: const Icon(
+                                      Icons.add_a_photo,
+                                      color: kwhite,
+                                    ),
+                                    title: const Text(
+                                      'camera',
+                                      style: TextStyle(
+                                        color: kwhite,
+                                      ),
+                                    ),
+                                  ),
+                                  ListTile(
+                                    onTap: () {},
+                                    leading: const Icon(
+                                      Icons.collections,
+                                      color: kwhite,
+                                    ),
+                                    title: const Text(
+                                      'Gallery',
+                                      style: TextStyle(
+                                        color: kwhite,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            // barrierColor: kgrey,
+                            backgroundColor: kblack,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                side: const BorderSide(
+                                  color: kwhite,
+                                  style: BorderStyle.solid,
+                                  width: 2.0,
+                                )),
+                          );
+                        },
                         elevation: 2.0,
                         fillColor: const Color(0xFFF5F6F9),
                         padding: const EdgeInsets.all(15.0),
@@ -89,8 +135,10 @@ class Formwidget extends StatelessWidget {
                     width: 150,
                     child: ElevatedButton(
                       style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStateProperty.all(Colors.blueGrey)),
+                        backgroundColor: MaterialStateProperty.all(
+                          Colors.blueGrey,
+                        ),
+                      ),
                       onPressed: () {
                         Navigator.pop(context);
                       },

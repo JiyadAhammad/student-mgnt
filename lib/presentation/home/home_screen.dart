@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:student/constant/color/colors.dart';
-import 'package:student/constant/size/sized_box.dart';
 import 'package:student/presentation/form_widget/form_widget.dart';
-import 'package:student/widget/delete_show_dialog.dart';
 
 class HomeSceen extends StatelessWidget {
   const HomeSceen({Key? key}) : super(key: key);
@@ -63,12 +62,13 @@ class HomeSceen extends StatelessWidget {
               ),
               child: ListTile(
                 onTap: () {},
-                onLongPress: () {
-                  showDialog(
-                    context: context,
-                    builder: (ctx) => const DeleteDialogWidget(),
-                  );
-                },
+                // onLongPress: () {
+                //   // showDialog(
+                //   //   context: context,
+                //   //   builder: (ctx) => const DeleteDialogWidget(),
+                //   // );
+                //   Get.defaultDialog();
+                // },
                 leading: const CircleAvatar(
                   radius: 30,
                 ),
@@ -90,9 +90,28 @@ class HomeSceen extends StatelessWidget {
                     IconButton(
                       padding: EdgeInsets.zero,
                       onPressed: () {
-                        showDialog(
-                          context: context,
-                          builder: (ctx) => const DeleteDialogWidget(),
+                        Get.defaultDialog(
+                          title: 'Alert!!',
+                          titleStyle: const TextStyle(
+                            fontSize: 25,
+                            color: kwhite,
+                          ),
+                          middleText: 'Do you want to Delete ',
+                          middleTextStyle: const TextStyle(
+                            fontSize: 20,
+                            color: kwhite,
+                          ),
+                          backgroundColor: kblack,
+                          textConfirm: 'Ok',
+                          confirmTextColor: kblack,
+                          onConfirm: () {
+                            Get.back();
+                          },
+                          buttonColor: kwhite,
+                          textCancel: 'Cancel',
+                          cancelTextColor: kwhite,
+                          onCancel: () {},
+                          barrierDismissible: false,
                         );
                       },
                       icon: const Icon(
