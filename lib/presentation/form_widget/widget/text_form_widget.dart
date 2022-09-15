@@ -38,5 +38,3 @@ class TextFormWidget extends StatelessWidget {
     );
   }
 }
-
-
