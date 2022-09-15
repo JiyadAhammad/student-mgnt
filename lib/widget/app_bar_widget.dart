@@ -40,12 +40,19 @@ class AppBarWidget extends StatelessWidget {
           padding: EdgeInsets.zero,
           onPressed: () {
             Get.to(
-              const Formwidget(),
+              () => const Formwidget(),
               transition: Transition.zoom,
               duration: const Duration(
                 milliseconds: 1000,
               ),
-            );
+            ); 
+            // Get.to(
+            //   const Formwidget(),
+            //   transition: Transition.zoom,
+            //   duration: const Duration(
+            //     milliseconds: 1000,
+            //   ),
+            // );
           },
           icon: Icon(
             addIcon,

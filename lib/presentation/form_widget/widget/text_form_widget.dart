@@ -1,21 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class TextFormWidget extends StatelessWidget {
   final IconData prefixIcon;
   final String hintText;
   final TextInputType keyboardType;
   final TextEditingController controller;
-  const TextFormWidget(
-      {Key? key,
-      required this.prefixIcon,
-      required this.hintText,
-      this.keyboardType = TextInputType.name,
-      required this.controller})
-      : super(key: key);
+  final String? Function(String?)? validator;
+  final List<TextInputFormatter>? inputFormatters;
+  const TextFormWidget({
+    Key? key,
+    required this.prefixIcon,
+    required this.hintText,
+    this.keyboardType = TextInputType.name,
+    required this.controller,
+    this.validator,
+    this.inputFormatters,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return TextFormField(
       controller: controller,
       keyboardType: keyboardType,
       decoration: InputDecoration(
@@ -28,6 +33,10 @@ class TextFormWidget extends StatelessWidget {
           ),
         ),
       ),
+      validator: validator,
+      inputFormatters: inputFormatters,
     );
   }
 }
+
+
