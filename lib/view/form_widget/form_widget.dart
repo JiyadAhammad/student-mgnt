@@ -38,8 +38,9 @@ class Formwidget extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
         child: SingleChildScrollView(
-          child: GetBuilder<ImageController>(init: ImageController(),
-            builder: (controller) =>  Column(
+          child: GetBuilder<ImageController>(
+            init: ImageController(),
+            builder: (controller) => Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 SizedBox(
@@ -289,5 +290,34 @@ okButtonClicked() async {
       margin: const EdgeInsets.only(bottom: 15),
     );
     return;
+  } else {
+    Get.snackbar(
+      'title',
+      'message',
+      titleText: const Center(
+        child: Text(
+          'Success',
+          style: TextStyle(
+            fontSize: 20,
+            color: kred,
+          ),
+        ),
+      ),
+      messageText: const Center(
+        child: Text(
+          'Successfully Added',
+          style: TextStyle(
+            fontSize: 18,
+            color: kwhite,
+          ),
+        ),
+      ),
+      snackPosition: SnackPosition.BOTTOM,
+      backgroundColor: kblack,
+      colorText: kwhite,
+      maxWidth: 250,
+      margin: const EdgeInsets.only(bottom: 15),
+    );
+    Get.back();
   }
 }

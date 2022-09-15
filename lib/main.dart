@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:hive_flutter/adapters.dart';
+import 'package:student/model/data_model/data_model.dart';
 import 'package:student/view/splash/splash_screen.dart';
 
-void main() {
+late Box<Student> studentDb;
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Hive.initFlutter();
+  Hive.registerAdapter(StudentAdapter());
+  studentDb = await Hive.openBox<Student>('student');
   runApp(const MyApp());
 }
 
