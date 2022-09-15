@@ -2,8 +2,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:student/constant/color/colors.dart';
-import 'package:student/presentation/home/home_screen.dart';
-import 'package:student/presentation/splash/widget/animation.dart';
+import 'package:student/view/home/home_screen.dart';
+import 'package:student/view/splash/widget/animation.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);

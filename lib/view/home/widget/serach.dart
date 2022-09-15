@@ -1,7 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:student/infrastructure/data_function/function.dart';
+import 'package:student/model/data_function/function.dart';
 
 class Search extends SearchDelegate {
   @override

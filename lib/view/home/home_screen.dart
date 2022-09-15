@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:student/constant/color/colors.dart';
-import 'package:student/presentation/student_details/student_details.dart';
+import 'package:student/view/student_details/student_details.dart';
 import 'package:student/widget/app_bar_widget.dart';
 
 class HomeSceen extends StatelessWidget {

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:student/constant/color/colors.dart';
-import 'package:student/presentation/form_widget/form_widget.dart';
-import 'package:student/presentation/home/widget/serach.dart';
+import 'package:student/view/form_widget/form_widget.dart';
+import 'package:student/view/home/widget/serach.dart';
 
 class AppBarWidget extends StatelessWidget {
   final String title;
