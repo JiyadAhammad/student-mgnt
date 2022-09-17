@@ -6,7 +6,6 @@ class TextFormWidget extends StatelessWidget {
   final String hintText;
   final TextInputType keyboardType;
   final TextEditingController controller;
-  final String? Function(String?)? validator;
   final List<TextInputFormatter>? inputFormatters;
   const TextFormWidget({
     Key? key,
@@ -14,7 +13,6 @@ class TextFormWidget extends StatelessWidget {
     required this.hintText,
     this.keyboardType = TextInputType.name,
     required this.controller,
-    this.validator,
     this.inputFormatters,
   }) : super(key: key);
 
@@ -22,6 +20,7 @@ class TextFormWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFormField(
       controller: controller,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
       keyboardType: keyboardType,
       decoration: InputDecoration(
         prefixIcon: Icon(prefixIcon),
@@ -33,8 +32,13 @@ class TextFormWidget extends StatelessWidget {
           ),
         ),
       ),
-      validator: validator,
+      // validator: validator,
       inputFormatters: inputFormatters,
+      validator: (value) {
+        if (value == null) {
+          return 'Field Cannot be Empty';
+        }
+      },
     );
   }
 }

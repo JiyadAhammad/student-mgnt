@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -6,6 +7,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:student/constant/color/colors.dart';
 import 'package:student/constant/size/sized_box.dart';
 import 'package:student/controller/controller/image_controller.dart';
+import 'package:student/controller/controller/student_controller.dart';
+import 'package:student/model/data_model/data_model.dart';
 import 'package:student/view/form_widget/widget/text_form_widget.dart';
 
 final nameController = TextEditingController();
@@ -23,7 +26,8 @@ final phoneController = TextEditingController();
 final _formKey = GlobalKey<FormState>();
 
 class Formwidget extends StatelessWidget {
-  const Formwidget({Key? key}) : super(key: key);
+  final obj;
+  const Formwidget({Key? key, required this.obj}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +58,7 @@ class Formwidget extends StatelessWidget {
                         backgroundImage: controller.imagefile != null
                             ? FileImage(File(controller.imagefile!.path))
                                 as ImageProvider
-                            : const AssetImage(''),
+                            : const AssetImage('asset/images/No-photo-m.png'),
                         // backgroundImage: AssetImage(''),
                         backgroundColor: kblack,
                       ),
@@ -169,7 +173,7 @@ class Formwidget extends StatelessWidget {
                 ),
                 kheight,
                 TextFormWidget(
-                  prefixIcon: Icons.domain_verification,
+                  prefixIcon: Icons.developer_board,
                   hintText: 'Enter Domain',
                   controller: domainController,
                 ),
@@ -210,7 +214,8 @@ class Formwidget extends StatelessWidget {
                           ),
                         ),
                         onPressed: () {
-                          okButtonClicked();
+                          okButtonClicked(controller);
+                          obj.update();
                         },
                         child: const Text(
                           'ok',
@@ -255,13 +260,18 @@ class BottomSheetWidget extends StatelessWidget {
   }
 }
 
-okButtonClicked() async {
+Future<void> okButtonClicked(controllerImage) async {
+  final image = controllerImage.imagefile!.path.toString();
   final name = nameController.text.trim();
   final age = ageController.text.trim();
   final domain = domainController.text.trim();
   final number = phoneController.text.trim();
   // final image = imagefile;
-  if (name.isEmpty || age.isEmpty || domain.isEmpty || number.isEmpty) {
+  if (name.isEmpty ||
+      age.isEmpty ||
+      domain.isEmpty ||
+      number.isEmpty ||
+      image.isEmpty) {
     Get.snackbar(
       'Warning',
       'All Field are Required',
@@ -291,6 +301,7 @@ okButtonClicked() async {
     );
     return;
   } else {
+    Get.back();
     Get.snackbar(
       'title',
       'message',
@@ -299,7 +310,7 @@ okButtonClicked() async {
           'Success',
           style: TextStyle(
             fontSize: 20,
-            color: kred,
+            color: kgreen,
           ),
         ),
       ),
@@ -318,6 +329,15 @@ okButtonClicked() async {
       maxWidth: 250,
       margin: const EdgeInsets.only(bottom: 15),
     );
-    Get.back();
   }
+  final addStudentToDb = Student(
+    studentImage: image,
+    studentName: name,
+    studentAge: age,
+    studentDomain: domain,
+    studentPHNumber: number,
+  );
+  StudentController().addStudent(
+    addStudentToDb,
+  );
 }
