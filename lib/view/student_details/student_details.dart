@@ -1,14 +1,28 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:student/constant/color/colors.dart';
 import 'package:student/constant/size/sized_box.dart';
+import 'package:student/controller/controller/student_controller.dart';
+import 'package:student/model/data_model/data_model.dart';
 
+// ignore: must_be_immutable
 class StudentDetail extends StatelessWidget {
-  const StudentDetail({Key? key}) : super(key: key);
+  final int index;
+  Student data;
+  final StudentController controllerObj;
+  StudentDetail({
+    Key? key,
+    required this.index,
+    required this.controllerObj,
+    required this.data,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    // final data = controllerObj.list[index];
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(50),
@@ -51,23 +65,26 @@ class StudentDetail extends StatelessWidget {
           children: [
             Center(
               child: CircleAvatar(
+                backgroundImage: FileImage(File(data.studentImage!)),
                 radius: 100.r,
               ),
             ),
             kheight20,
-            const Detailswidget(studentDetails: 'name'),
+            Detailswidget(
+                studentDetails:
+                    'Name${'       = ${data.studentName}'.toUpperCase()}'),
             kheight,
             const DividerWidget(),
             kheight20,
-            const Detailswidget(studentDetails: 'age'),
+            Detailswidget(studentDetails: 'Age          = ${data.studentAge}'),
             kheight,
             const DividerWidget(),
             kheight20,
-            const Detailswidget(studentDetails: 'domain'),
+            Detailswidget(studentDetails: 'Domain   = ${data.studentDomain}'),
             kheight,
             const DividerWidget(),
             kheight20,
-            const Detailswidget(studentDetails: 'number'),
+            Detailswidget(studentDetails: 'Number   = ${data.studentPHNumber}'),
             kheight,
             const DividerWidget(),
             kheight20,

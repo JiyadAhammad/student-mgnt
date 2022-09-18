@@ -96,7 +96,12 @@ class HomeSceen extends StatelessWidget {
                                 duration: const Duration(
                                   milliseconds: 800,
                                 ),
-                                const StudentDetail(),
+                                StudentDetail(
+                                  index: index,
+                                  controllerObj: studentController,
+                                  data: studentController.list[index],
+
+                                ),
                               );
                             },
                             // onLongPress: () {
@@ -116,7 +121,8 @@ class HomeSceen extends StatelessWidget {
                               radius: 30,
                             ),
                             title: Text(
-                              studentControllerList.list[index].studentName!,
+                              studentControllerList.list[index].studentName!
+                                  .toUpperCase(),
                             ),
                             subtitle: Text(
                               studentControllerList.list[index].studentDomain!,
