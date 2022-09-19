@@ -9,7 +9,6 @@ import 'package:student/controller/controller/student_controller.dart';
 import 'package:student/view/form_widget/form_widget.dart';
 import 'package:student/view/home/widget/serach.dart';
 import 'package:student/view/student_details/student_details.dart';
-import 'package:student/widget/app_bar_widget.dart';
 
 // ignore: must_be_immutable
 class HomeSceen extends StatelessWidget {

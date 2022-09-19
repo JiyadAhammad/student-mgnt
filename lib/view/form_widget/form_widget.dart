@@ -8,7 +8,6 @@ import 'package:student/constant/color/colors.dart';
 import 'package:student/constant/size/sized_box.dart';
 import 'package:student/controller/controller/image_controller.dart';
 import 'package:student/controller/controller/student_controller.dart';
-import 'package:student/main.dart';
 import 'package:student/model/data_model/data_model.dart';
 import 'package:student/view/form_widget/widget/text_form_widget.dart';
 import 'package:student/view/home/home_screen.dart';

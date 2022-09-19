@@ -2,8 +2,10 @@ import 'dart:developer';
 import 'dart:ffi';
 
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:student/main.dart';
 import 'package:student/model/data_model/data_model.dart';
+import 'package:student/view/home/widget/serach.dart';
 
 class StudentController extends GetxController {
   var list = <Student>[];
@@ -16,6 +18,27 @@ class StudentController extends GetxController {
     // studentDb.add(value);
     // list.value.add(value);
     getAllStudents();
+    update();
+  }
+
+  String? pickedImage;
+  String? pickedimagefromGallery;
+  // var list = <Student>[];
+
+  getCamera() async {
+    final images = await ImagePicker().pickImage(source: ImageSource.camera);
+
+    pickedimagefromGallery = images!.path;
+    update();
+  }
+
+  getGallery() async {
+    final images = await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (images == null) {
+      print('aaaa');
+    }
+    pickedimagefromGallery = images!.path;
+
     update();
   }
 
@@ -43,5 +66,12 @@ class StudentController extends GetxController {
   void onInit() {
     getAllStudents();
     super.onInit();
+  }
+
+  updateStudent(Student editStudent, int index) async {
+    await studentDb.put(studcontroller.list[index].id, editStudent);
+    list.removeAt(index);
+    list.insert(index, editStudent);
+    update();
   }
 }
