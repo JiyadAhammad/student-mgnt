@@ -1,30 +1,28 @@
 import 'dart:async';
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:student/constant/color/colors.dart';
 import 'package:student/constant/size/sized_box.dart';
-import 'package:student/controller/controller/image_controller.dart';
 import 'package:student/controller/controller/student_controller.dart';
+import 'package:student/main.dart';
 import 'package:student/model/data_model/data_model.dart';
 import 'package:student/view/form_widget/widget/text_form_widget.dart';
 import 'package:student/view/home/home_screen.dart';
+import 'package:student/widget/bottom_sheet.dart';
 
 final nameController = TextEditingController();
 final ageController = TextEditingController();
 final domainController = TextEditingController();
 final phoneController = TextEditingController();
-final stdController = Get.put(StudentController());
-// final picker = ImagePicker();
+
+File? image;
 
 //  // Pick an image
 //     final XFile? image = await picker.pickImage(source: ImageSource.gallery);
 //     // Capture a photo
 //     final XFile? photo = await picker.pickImage(source: ImageSource.camera);
-
-final _formKey = GlobalKey<FormState>();
 
 class Formwidget extends StatelessWidget {
   const Formwidget({
@@ -44,9 +42,9 @@ class Formwidget extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
         child: SingleChildScrollView(
-          child: GetBuilder<ImageController>(
-            init: ImageController(),
-            builder: (controller) => Column(
+          child: GetBuilder<StudentController>(
+            init: StudentController(),
+            builder: (data) => Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 SizedBox(
@@ -57,8 +55,8 @@ class Formwidget extends StatelessWidget {
                     fit: StackFit.expand,
                     children: [
                       CircleAvatar(
-                        backgroundImage: controller.imagefile != null
-                            ? FileImage(File(controller.imagefile!.path))
+                        backgroundImage: data.pickedimagefromGallery != null
+                            ? FileImage(File(data.pickedimagefromGallery!))
                                 as ImageProvider
                             : const AssetImage('asset/images/No-photo-m.png'),
                         // backgroundImage: AssetImage(''),
@@ -70,71 +68,7 @@ class Formwidget extends StatelessWidget {
                         child: RawMaterialButton(
                           onPressed: () {
                             Get.bottomSheet(
-                              SizedBox(
-                                height: 120,
-                                child: Wrap(
-                                  direction: Axis.horizontal,
-                                  children: [
-                                    ListTile(
-                                      onTap: () async {
-                                        controller.takePhotoFromSource(
-                                            ImageSource.camera);
-                                        Get.back();
-                                        controller.update();
-                                      },
-                                      leading: const Icon(
-                                        Icons.add_a_photo,
-                                        color: kwhite,
-                                      ),
-                                      title: const Text(
-                                        'Camera',
-                                        style: TextStyle(
-                                          color: kwhite,
-                                        ),
-                                      ),
-                                    ),
-                                    ListTile(
-                                      onTap: () async {
-                                        controller.takePhotoFromSource(
-                                            ImageSource.gallery);
-                                        Get.back();
-                                        controller.update();
-                                      },
-                                      leading: const Icon(
-                                        Icons.collections,
-                                        color: kwhite,
-                                      ),
-                                      title: const Text(
-                                        'Galley',
-                                        style: TextStyle(
-                                          color: kwhite,
-                                        ),
-                                      ),
-                                    ),
-                                    // BottomSheetWidget(
-                                    //   icon: Icons.add_a_photo,
-                                    //   nameIcon: 'Camera',
-                                    // ),
-                                    // BottomSheetWidget(
-                                    //   icon: Icons.collections,
-                                    //   nameIcon: 'Galley',
-                                    // )
-                                    // ListTile(
-                                    //   onTap: () {},
-                                    //   leading: const Icon(
-                                    //     Icons.collections,
-                                    //     color: kwhite,
-                                    //   ),
-                                    //   title: const Text(
-                                    //     'Gallery',
-                                    //     style: TextStyle(
-                                    //       color: kwhite,
-                                    //     ),
-                                    //   ),
-                                    // ),
-                                  ],
-                                ),
-                              ),
+                              const ImageBottomSheet(),
                               // barrierColor: kgrey,
                               backgroundColor: kblack,
                               shape: RoundedRectangleBorder(
@@ -216,8 +150,8 @@ class Formwidget extends StatelessWidget {
                           ),
                         ),
                         onPressed: () {
-                          okButtonClicked(controller);
-                          controller.update();
+                          okButtonClicked(context);
+                          // controller.update();
                         },
                         child: const Text(
                           'ok',
@@ -262,18 +196,19 @@ class BottomSheetWidget extends StatelessWidget {
   }
 }
 
-Future<void> okButtonClicked(controllerImage) async {
-  final image = controllerImage.imagefile!.path.toString();
+Future<void> okButtonClicked(ctx) async {
+  final image =
+      stdController.pickedimagefromGallery ?? 'asset/images/No-photo-m.png';
   final name = nameController.text.trim();
   final age = ageController.text.trim();
   final domain = domainController.text.trim();
   final number = phoneController.text.trim();
   // final image = imagefile;
-  if (name.isEmpty ||
+  if (image == 'asset/images/No-photo-m.png' ||
+      name.isEmpty ||
       age.isEmpty ||
       domain.isEmpty ||
-      number.isEmpty ||
-      image.isEmpty) {
+      number.isEmpty) {
     Get.snackbar(
       'Warning',
       'All Field are Required',
@@ -301,8 +236,16 @@ Future<void> okButtonClicked(controllerImage) async {
       maxWidth: 250,
       margin: const EdgeInsets.only(bottom: 15),
     );
-    return;
   } else {
+    final addStudentToDb = Student(
+      // id: ,
+      studentImage: image,
+      studentName: name,
+      studentAge: age,
+      studentDomain: domain,
+      studentPHNumber: number,
+    );
+
     Get.offAll(() => HomeSceen());
     Get.snackbar(
       'title',
@@ -331,18 +274,14 @@ Future<void> okButtonClicked(controllerImage) async {
       maxWidth: 250,
       margin: const EdgeInsets.only(bottom: 15),
     );
+    nameController.clear();
+    ageController.clear();
+    domainController.clear();
+    phoneController.clear();
+    stdController.addStudentList(
+      addStudentToDb,
+    );
     // final id = await studentDb.add();
 
   }
-  final addStudentToDb = Student(
-    // id: ,
-    studentImage: image,
-    studentName: name,
-    studentAge: age,
-    studentDomain: domain,
-    studentPHNumber: number,
-  );
-  stdController.addStudent(
-    addStudentToDb,
-  );
 }

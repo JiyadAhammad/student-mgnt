@@ -1,11 +1,9 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:student/constant/color/colors.dart';
 import 'package:student/controller/controller/student_controller.dart';
-import 'package:student/view/home/home_screen.dart';
 import 'package:student/view/student_details/student_details.dart';
 
 final studcontroller = Get.put(StudentController());
@@ -103,8 +101,6 @@ class Search extends SearchDelegate {
                         Get.to(
                           StudentDetail(
                             index: index,
-                            data: searched[index],
-                            controllerObj: studcontroller,
                           ),
                         );
                       },
@@ -203,8 +199,6 @@ class Search extends SearchDelegate {
                         Get.to(
                           StudentDetail(
                             index: index,
-                            data: searched[index],
-                            controllerObj: studcontroller,
                           ),
                         );
                       },

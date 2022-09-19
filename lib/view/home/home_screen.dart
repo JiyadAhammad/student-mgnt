@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -19,12 +18,12 @@ class HomeSceen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: kwhite,
+      backgroundColor: kblack,
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(50),
+        preferredSize: const Size.fromHeight(50),
         child: AppBar(
           backgroundColor: kblack,
-          title: Text(
+          title: const Text(
             'Home',
           ),
           centerTitle: true,
@@ -61,12 +60,12 @@ class HomeSceen extends StatelessWidget {
       ),
       body: GetBuilder<StudentController>(
         init: StudentController(),
-        builder: (studentControllerList) {
+        builder: (stdobj) {
           // log('${studentControllerList.list.length} this is the lenth');
-          return studentController.list.isNotEmpty
+          return stdobj.list.isNotEmpty
               ? ListView.separated(
                   physics: const BouncingScrollPhysics(),
-                  itemCount: studentControllerList.list.length,
+                  itemCount: stdobj.list.length,
                   separatorBuilder: (context, index) {
                     return const SizedBox();
                   },
@@ -81,7 +80,7 @@ class HomeSceen extends StatelessWidget {
                       child: Container(
                         height: 80,
                         decoration: BoxDecoration(
-                          border: Border.all(width: 3.0, color: kblack),
+                          border: Border.all(width: 3.0, color: kwhite),
                           borderRadius: const BorderRadius.all(
                             Radius.circular(20),
                           ),
@@ -95,8 +94,8 @@ class HomeSceen extends StatelessWidget {
                               ),
                               StudentDetail(
                                 index: index,
-                                controllerObj: studentController,
-                                data: studentController.list[index],
+                                // controllerObj: studentController,
+                                // data: studentController.list[index],
                               ),
                             );
                           },
@@ -110,21 +109,29 @@ class HomeSceen extends StatelessWidget {
                           leading: CircleAvatar(
                             backgroundImage: FileImage(
                               File(
-                                studentControllerList.list[index].studentImage!,
+                                stdobj.list[index].studentImage!,
                               ),
                             ),
                             radius: 30,
                           ),
                           title: Text(
-                            studentControllerList.list[index].studentName!
-                                .toUpperCase(),
+                            stdobj.list[index].studentName!.toUpperCase(),
+                            style: const TextStyle(color: kwhite),
                           ),
                           subtitle: Text(
-                            studentControllerList.list[index].studentDomain!,
+                            stdobj.list[index].studentDomain!,
+                            style: TextStyle(color: kgrey),
                           ),
                           trailing: IconButton(
                             padding: EdgeInsets.zero,
                             onPressed: () {
+                              // if (stdobj.list[index].id == null) {
+                              //   return;
+                              // }
+                              // stdobj.deleteStudent(
+                              //   stdobj.list[index].id!,
+                              //   index,
+                              // );
                               Get.defaultDialog(
                                 title: 'Alert!!',
                                 titleStyle: const TextStyle(
@@ -140,8 +147,11 @@ class HomeSceen extends StatelessWidget {
                                 textConfirm: 'Ok',
                                 confirmTextColor: kblack,
                                 onConfirm: () {
-                                  studentControllerList.deleteStudent(index);
-                                  Get.back();
+                                  stdobj.deleteStudent(
+                                    stdobj.list[index].id!,
+                                    index,
+                                  );
+                                  Get.offAll(HomeSceen());
                                   Get.snackbar(
                                     'title',
                                     'message',
@@ -174,13 +184,14 @@ class HomeSceen extends StatelessWidget {
                                 textCancel: 'Cancel',
                                 cancelTextColor: kwhite,
                                 onCancel: () {
-                                  Get.back();
+                                  Get.offAll(HomeSceen());
                                 },
                                 barrierDismissible: false,
                               );
                             },
                             icon: const Icon(
                               Icons.delete,
+                              color: kred,
                             ),
                           ),
                         ),
@@ -199,7 +210,7 @@ class HomeSceen extends StatelessWidget {
                       child: Text(
                         "No Data Found!! 😟",
                         style: TextStyle(
-                          color: kblack,
+                          color: kwhite,
                           fontSize: 30,
                           fontWeight: FontWeight.bold,
                         ),

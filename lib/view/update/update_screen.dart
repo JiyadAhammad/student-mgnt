@@ -3,21 +3,20 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:student/constant/color/colors.dart';
-import 'package:student/controller/controller/image_controller.dart';
 import 'package:student/controller/controller/student_controller.dart';
+import 'package:student/main.dart';
 import 'package:student/model/data_model/data_model.dart';
 import 'package:student/view/form_widget/form_widget.dart';
 import 'package:student/view/home/home_screen.dart';
 import 'package:student/view/home/widget/serach.dart';
-
-final imgController = Get.put(ImageController());
+import 'package:student/widget/bottom_sheet.dart';
 
 // ignore: must_be_immutable
 class UpdateScreen extends StatelessWidget {
-  UpdateScreen({Key? key, required this.index}) : super(key: key);
   final int index;
-  final _nameController1 = TextEditingController();
+  UpdateScreen({Key? key, required this.index}) : super(key: key);
 
+  final _nameController = TextEditingController();
   final _ageController = TextEditingController();
   final _domainController = TextEditingController();
   final _numberController = TextEditingController();
@@ -26,9 +25,7 @@ class UpdateScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('ssssss');
-
-    _nameController1.text = studcontroller.list[index].studentName!;
+    _nameController.text = studcontroller.list[index].studentName!;
     _ageController.text = studcontroller.list[index].studentAge!;
     _domainController.text = studcontroller.list[index].studentDomain!;
     _numberController.text = studcontroller.list[index].studentPHNumber!;
@@ -45,153 +42,153 @@ class UpdateScreen extends StatelessWidget {
               child: GetBuilder<StudentController>(
                   init: StudentController(),
                   builder: (data) {
-                    return CircleAvatar(
-                      backgroundImage: imgController.imagefile != null
-                          ? FileImage(File(imgController.imagefile!.path))
-                              as ImageProvider
-                          : const AssetImage('asset/images/No-photo-m.png'),
-                      // backgroundImage: AssetImage(''),
-                      backgroundColor: kblack,
-                      radius: 100,
-                      child: IconButton(
-                        onPressed: () {
-                          Get.bottomSheet(
-                            SizedBox(
-                              height: 120,
-                              child: Wrap(
-                                direction: Axis.horizontal,
-                                children: [
-                                  ListTile(
-                                    onTap: () async {
-                                      imgController.takePhotoFromSource(
-                                          ImageSource.camera);
-                                      Get.back();
-                                      imgController.update();
-                                    },
-                                    leading: const Icon(
-                                      Icons.add_a_photo,
+                    return SizedBox(
+                      height: 200,
+                      width: 200,
+                      child: Stack(
+                        clipBehavior: Clip.none,
+                        fit: StackFit.expand,
+                        children: [
+                          Container(
+                            // height: 200,
+                            // width: 200,
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                  image: stdController.pickedimagefromGallery ==
+                                          null
+                                      ? FileImage(
+                                          File(data.list[index].studentImage!))
+                                      : FileImage(
+                                          File(data.pickedimagefromGallery!)),
+                                  fit: BoxFit.contain),
+                              color: Colors.white,
+                              shape: BoxShape.circle,
+                            ),
+                          ),
+                          // CircleAvatar(
+                          //   backgroundImage: stdController
+                          //               .pickedimagefromGallery ==
+                          //           null
+                          //       ? FileImage(
+                          //           File(data.list[index].studentImage!))
+                          //       : FileImage(File(data.pickedimagefromGallery!)),
+                          //   // backgroundImage: AssetImage(''),
+                          //   backgroundColor: kblack,
+                          // ),
+                          Positioned(
+                            bottom: 10,
+                            right: 80,
+                            child: RawMaterialButton(
+                              onPressed: () {
+                                Get.bottomSheet(
+                                  const ImageBottomSheet(),
+                                  // barrierColor: kgrey,
+                                  backgroundColor: kblack,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                    side: const BorderSide(
                                       color: kwhite,
-                                    ),
-                                    title: const Text(
-                                      'Camera',
-                                      style: TextStyle(
-                                        color: kwhite,
-                                      ),
+                                      style: BorderStyle.solid,
+                                      width: 2.0,
                                     ),
                                   ),
-                                  ListTile(
-                                    onTap: () async {
-                                      imgController.takePhotoFromSource(
-                                          ImageSource.gallery);
-                                      Get.back();
-                                      imgController.update();
-                                    },
-                                    leading: const Icon(
-                                      Icons.collections,
-                                      color: kwhite,
-                                    ),
-                                    title: const Text(
-                                      'Galley',
-                                      style: TextStyle(
-                                        color: kwhite,
-                                      ),
-                                    ),
-                                  ),
-                                  // BottomSheetWidget(
-                                  //   icon: Icons.add_a_photo,
-                                  //   nameIcon: 'Camera',
-                                  // ),
-                                  // BottomSheetWidget(
-                                  //   icon: Icons.collections,
-                                  //   nameIcon: 'Galley',
-                                  // )
-                                  // ListTile(
-                                  //   onTap: () {},
-                                  //   leading: const Icon(
-                                  //     Icons.collections,
-                                  //     color: kwhite,
-                                  //   ),
-                                  //   title: const Text(
-                                  //     'Gallery',
-                                  //     style: TextStyle(
-                                  //       color: kwhite,
-                                  //     ),
-                                  //   ),
-                                  // ),
-                                ],
+                                );
+                              },
+                              elevation: 2.0,
+                              fillColor: const Color(0xFFF5F6F9),
+                              padding: const EdgeInsets.all(15.0),
+                              shape: const CircleBorder(),
+                              child: const Icon(
+                                Icons.camera_alt_outlined,
+                                color: Colors.blue,
                               ),
                             ),
-                            // barrierColor: kgrey,
-                            backgroundColor: kblack,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
-                              side: const BorderSide(
-                                color: kwhite,
-                                style: BorderStyle.solid,
-                                width: 2.0,
-                              ),
-                            ),
-                          );
-                        },
-                        icon: const Icon(Icons.add_photo_alternate_outlined),
+                          ),
+                        ],
                       ),
                     );
                   }),
             ),
             Padding(
-              padding: const EdgeInsets.all(15.0),
+              padding: const EdgeInsets.all(10),
               child: TextFormField(
-                controller: _nameController1,
+                controller: _nameController,
                 decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(10),
+                    ),
+                  ),
                 ),
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(15.0),
+              padding: const EdgeInsets.all(10),
               child: TextFormField(
                 controller: _ageController,
                 decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(10),
+                    ),
+                  ),
                 ),
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(15.0),
+              padding: const EdgeInsets.all(10),
               child: TextFormField(
                 controller: _domainController,
                 decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(10),
+                    ),
+                  ),
                 ),
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(15.0),
+              padding: const EdgeInsets.all(10),
               child: TextFormField(
                 controller: _numberController,
                 decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(10),
+                    ),
+                  ),
                 ),
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
+              padding: const EdgeInsets.symmetric(horizontal: 40),
               child: ElevatedButton(
-                  onPressed: () {
-                    editButtonListner(context);
-                  },
-                  child: const Text('update')),
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(kblack),
+                ),
+                onPressed: () {
+                  editButtonListner(context);
+                },
+                child: const Text(
+                  'update',
+                  style: TextStyle(
+                    fontSize: 20,
+                  ),
+                ),
+              ),
             ),
           ],
         )));
   }
 
   Future<void> editButtonListner(ctx) async {
-    final imagefile = imgController.imagefile!.path.toString();
-    final domain = _domainController.text.trim();
-    final name = _nameController1.text.trim();
-    final age = _ageController.text.trim();
-    final phnumber = _numberController.text.trim();
+    final imagefile = stdController.pickedimagefromGallery ??
+        stdController.list[index].studentImage;
+    final domain = _domainController.text;
+    final name = _nameController.text;
+    final age = _ageController.text;
+    final phnumber = _numberController.text;
     if (name.isEmpty || age.isEmpty || domain.isEmpty || phnumber.isEmpty) {
       Get.snackbar(
         'Warning',
@@ -283,9 +280,9 @@ class UpdateScreen extends StatelessWidget {
     //     backgroundColor: Colors.black);
     // studcontroller.updateStudent(editStudent, index);
 
-    // _nameController1.clear();
-    // _ageController.clear();
-    // _domainController.clear();
-    // _numberController.clear();
+    _nameController.clear();
+    _ageController.clear();
+    _domainController.clear();
+    _numberController.clear();
   }
 }

@@ -1,29 +1,23 @@
 import 'dart:developer';
-import 'dart:ffi';
 
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:student/main.dart';
 import 'package:student/model/data_model/data_model.dart';
-import 'package:student/view/home/widget/serach.dart';
 
 class StudentController extends GetxController {
-  var list = <Student>[];
-  addStudent(Student value) async {
-    final id = await studentDb.add(value);
-    value.id = id;
-    list.add(value);
-    // log(value.toString());
-    log(value.studentName.toString());
-    // studentDb.add(value);
-    // list.value.add(value);
-    getAllStudents();
+  @override
+  void onReady() {
+    list.clear();
+    list.addAll(studentDb.values);
     update();
+
+    super.onReady();
   }
 
   String? pickedImage;
   String? pickedimagefromGallery;
-  // var list = <Student>[];
+  var list = <Student>[];
 
   getCamera() async {
     final images = await ImagePicker().pickImage(source: ImageSource.camera);
@@ -34,42 +28,42 @@ class StudentController extends GetxController {
 
   getGallery() async {
     final images = await ImagePicker().pickImage(source: ImageSource.gallery);
-    if (images == null) {
-      print('aaaa');
-    }
+  
     pickedimagefromGallery = images!.path;
 
     update();
   }
 
-  Future<void> getAllStudents() async {
-    list.clear();
-    list.addAll(studentDb.values);
+  addStudentList(Student data) async {
+    final id = await studentDb.add(data);
+    final studentdata = Student(
+      id: id,
+      studentImage: data.studentImage,
+      studentName: data.studentName,
+      studentAge: data.studentAge,
+      studentDomain: data.studentDomain,
+      studentPHNumber: data.studentPHNumber,
+    );
+
+    await studentDb.put(id, studentdata);
+
+    list.add(studentdata);
+
     update();
+    log(id.toString());
+    log(list.toList().toString());
+    log(data.studentAge!);
   }
 
-  @override
-  void onReady() {
-    list.clear();
-    list.addAll(studentDb.values);
-    super.onReady();
-    update();
-  }
-
-  Future<void> deleteStudent(int index) async {
-    await studentDb.deleteAt(index);
+  deleteStudent(int id, int index) {
+    studentDb.delete(id);
     list.removeAt(index);
     update();
-  }
-
-  @override
-  void onInit() {
-    getAllStudents();
-    super.onInit();
+    print(index.toString());
   }
 
   updateStudent(Student editStudent, int index) async {
-    await studentDb.put(studcontroller.list[index].id, editStudent);
+    await studentDb.put(stdController.list[index].id, editStudent);
     list.removeAt(index);
     list.insert(index, editStudent);
     update();

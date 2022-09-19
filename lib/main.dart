@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/adapters.dart';
+import 'package:student/controller/controller/student_controller.dart';
 import 'package:student/model/data_model/data_model.dart';
 import 'package:student/view/splash/splash_screen.dart';
 
 late Box<Student> studentDb;
+final stdController = Get.put(StudentController());
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
