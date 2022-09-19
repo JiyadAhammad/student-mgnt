@@ -11,9 +11,11 @@ import 'package:student/view/update/update_screen.dart';
 // ignore: must_be_immutable
 class StudentDetail extends StatelessWidget {
   final int index;
+  final dataList;
   const StudentDetail({
     Key? key,
     required this.index,
+    this.dataList,
   }) : super(key: key);
 
   @override
@@ -57,48 +59,50 @@ class StudentDetail extends StatelessWidget {
       body: GetBuilder<StudentController>(
           init: StudentController(),
           builder: (data) {
-            return Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 10,
-                vertical: 10,
-              ),
-              child: Column(
-                // mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Center(
-                    child: CircleAvatar(
-                      backgroundImage:
-                          FileImage(File(data.list[index].studentImage!)),
-                      radius: 100.r,
+            return SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 10,
+                ),
+                child: Column(
+                  // mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Center(
+                      child: CircleAvatar(
+                        backgroundImage:
+                            FileImage(File(data.list[index].studentImage!)),
+                        radius: 100.r,
+                      ),
                     ),
-                  ),
-                  kheight20,
-                  Detailswidget(
-                      studentDetails:
-                          'Name${'       = ${data.list[index].studentName}'.toUpperCase()}'),
-                  kheight,
-                  const DividerWidget(),
-                  kheight20,
-                  Detailswidget(
-                      studentDetails:
-                          'Age          = ${data.list[index].studentAge}'),
-                  kheight,
-                  const DividerWidget(),
-                  kheight20,
-                  Detailswidget(
-                      studentDetails:
-                          'Domain   = ${data.list[index].studentDomain}'),
-                  kheight,
-                  const DividerWidget(),
-                  kheight20,
-                  Detailswidget(
-                      studentDetails:
-                          'Number   = ${data.list[index].studentPHNumber}'),
-                  kheight,
-                  const DividerWidget(),
-                  kheight20,
-                ],
+                    kheight20,
+                    Detailswidget(
+                        studentDetails:
+                            'Name${'       = ${data.list[index].studentName}'.toUpperCase()}'),
+                    kheight,
+                    const DividerWidget(),
+                    kheight20,
+                    Detailswidget(
+                        studentDetails:
+                            'Age          = ${data.list[index].studentAge}'),
+                    kheight,
+                    const DividerWidget(),
+                    kheight20,
+                    Detailswidget(
+                        studentDetails:
+                            'Domain   = ${data.list[index].studentDomain}'),
+                    kheight,
+                    const DividerWidget(),
+                    kheight20,
+                    Detailswidget(
+                        studentDetails:
+                            'Number   = ${data.list[index].studentPHNumber}'),
+                    kheight,
+                    const DividerWidget(),
+                    kheight20,
+                  ],
+                ),
               ),
             );
           }),

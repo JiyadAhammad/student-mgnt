@@ -204,11 +204,9 @@ Future<void> okButtonClicked(ctx) async {
   final domain = domainController.text.trim();
   final number = phoneController.text.trim();
   // final image = imagefile;
-  if (image == 'asset/images/No-photo-m.png' ||
-      name.isEmpty ||
-      age.isEmpty ||
-      domain.isEmpty ||
-      number.isEmpty) {
+  if (
+      // stdController.pickedimagefromGallery!.isEmpty ||
+      name.isEmpty || age.isEmpty || domain.isEmpty || number.isEmpty) {
     Get.snackbar(
       'Warning',
       'All Field are Required',
@@ -274,6 +272,7 @@ Future<void> okButtonClicked(ctx) async {
       maxWidth: 250,
       margin: const EdgeInsets.only(bottom: 15),
     );
+    stdController.pickedimagefromGallery = null;
     nameController.clear();
     ageController.clear();
     domainController.clear();

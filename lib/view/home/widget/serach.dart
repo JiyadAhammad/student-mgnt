@@ -101,6 +101,7 @@ class Search extends SearchDelegate {
                         Get.to(
                           StudentDetail(
                             index: index,
+                            dataList: searched[index].id,
                           ),
                         );
                       },
@@ -199,6 +200,7 @@ class Search extends SearchDelegate {
                         Get.to(
                           StudentDetail(
                             index: index,
+                            dataList: searched[index],
                           ),
                         );
                       },
