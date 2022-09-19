@@ -8,6 +8,7 @@ import 'package:student/controller/controller/student_controller.dart';
 import 'package:student/view/form_widget/form_widget.dart';
 import 'package:student/view/home/widget/serach.dart';
 import 'package:student/view/student_details/student_details.dart';
+import 'package:student/view/update/update_screen.dart';
 
 // ignore: must_be_immutable
 class HomeSceen extends StatelessWidget {
@@ -94,6 +95,7 @@ class HomeSceen extends StatelessWidget {
                               ),
                               StudentDetail(
                                 index: index,
+                                dataList: studentController.list[index],
                                 // controllerObj: studentController,
                                 // data: studentController.list[index],
                               ),
@@ -122,77 +124,96 @@ class HomeSceen extends StatelessWidget {
                             stdobj.list[index].studentDomain!,
                             style: TextStyle(color: kgrey),
                           ),
-                          trailing: IconButton(
-                            padding: EdgeInsets.zero,
-                            onPressed: () {
-                              // if (stdobj.list[index].id == null) {
-                              //   return;
-                              // }
-                              // stdobj.deleteStudent(
-                              //   stdobj.list[index].id!,
-                              //   index,
-                              // );
-                              Get.defaultDialog(
-                                title: 'Alert!!',
-                                titleStyle: const TextStyle(
-                                  fontSize: 25,
-                                  color: kwhite,
-                                ),
-                                middleText: 'Do you want to Delete ',
-                                middleTextStyle: const TextStyle(
-                                  fontSize: 20,
-                                  color: kwhite,
-                                ),
-                                backgroundColor: kblack,
-                                textConfirm: 'Ok',
-                                confirmTextColor: kblack,
-                                onConfirm: () {
-                                  stdobj.deleteStudent(
-                                    stdobj.list[index].id!,
-                                    index,
+                          trailing: Wrap(
+                            children: [
+                              IconButton(
+                                padding: EdgeInsets.zero,
+                                onPressed: () {
+                                  Get.to(
+                                    UpdateScreen(
+                                      index: index,
+                                    ),
                                   );
-                                  Get.offAll(HomeSceen());
-                                  Get.snackbar(
-                                    'title',
-                                    'message',
-                                    titleText: const Center(
-                                      child: Text(
-                                        'Success',
-                                        style: TextStyle(
-                                          fontSize: 20,
-                                          color: kred,
-                                        ),
-                                      ),
+                                },
+                                icon: const Icon(
+                                  Icons.edit,
+                                  color: kgreen,
+                                ),
+                              ),
+                              IconButton(
+                                padding: EdgeInsets.zero,
+                                onPressed: () {
+                                  // if (stdobj.list[index].id == null) {
+                                  //   return;
+                                  // }
+                                  // stdobj.deleteStudent(
+                                  //   stdobj.list[index].id!,
+                                  //   index,
+                                  // );
+                                  Get.defaultDialog(
+                                    title: 'Alert!!',
+                                    titleStyle: const TextStyle(
+                                      fontSize: 25,
+                                      color: kwhite,
                                     ),
-                                    messageText: const Center(
-                                      child: Text(
-                                        'Successfully Deleted',
-                                        style: TextStyle(
-                                          fontSize: 18,
-                                          color: kwhite,
-                                        ),
-                                      ),
+                                    middleText: 'Do you want to Delete ',
+                                    middleTextStyle: const TextStyle(
+                                      fontSize: 20,
+                                      color: kwhite,
                                     ),
-                                    snackPosition: SnackPosition.BOTTOM,
                                     backgroundColor: kblack,
-                                    colorText: kwhite,
-                                    maxWidth: 250,
-                                    margin: const EdgeInsets.only(bottom: 15),
+                                    textConfirm: 'Ok',
+                                    confirmTextColor: kblack,
+                                    onConfirm: () {
+                                      stdobj.deleteStudent(
+                                        stdobj.list[index].id!,
+                                        index,
+                                      );
+                                      Get.offAll(HomeSceen());
+                                      Get.snackbar(
+                                        'title',
+                                        'message',
+                                        titleText: const Center(
+                                          child: Text(
+                                            'Success',
+                                            style: TextStyle(
+                                              fontSize: 20,
+                                              color: kred,
+                                            ),
+                                          ),
+                                        ),
+                                        messageText: const Center(
+                                          child: Text(
+                                            'Successfully Deleted',
+                                            style: TextStyle(
+                                              fontSize: 18,
+                                              color: kwhite,
+                                            ),
+                                          ),
+                                        ),
+                                        snackPosition: SnackPosition.BOTTOM,
+                                        backgroundColor: kblack,
+                                        colorText: kwhite,
+                                        maxWidth: 250,
+                                        margin:
+                                            const EdgeInsets.only(bottom: 15),
+                                      );
+                                    },
+                                    buttonColor: kwhite,
+                                    textCancel: 'Cancel',
+                                    cancelTextColor: kwhite,
+                                    onCancel: () {
+                                      Get.offAll(HomeSceen());
+                                    },
+                                    barrierDismissible: false,
                                   );
                                 },
-                                buttonColor: kwhite,
-                                textCancel: 'Cancel',
-                                cancelTextColor: kwhite,
-                                onCancel: () {
-                                  Get.offAll(HomeSceen());
-                                },
-                                barrierDismissible: false,
-                              );
-                            },
-                            icon: const Icon(
-                              Icons.delete,
-                              color: kred,
-                            ),
+                                icon: const Icon(
+                                  Icons.delete,
+                                  color: kred,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ),

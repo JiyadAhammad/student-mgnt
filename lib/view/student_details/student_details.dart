@@ -5,17 +5,18 @@ import 'package:get/get.dart';
 import 'package:student/constant/color/colors.dart';
 import 'package:student/constant/size/sized_box.dart';
 import 'package:student/controller/controller/student_controller.dart';
+import 'package:student/model/data_model/data_model.dart';
 import 'package:student/view/home/home_screen.dart';
 import 'package:student/view/update/update_screen.dart';
 
 // ignore: must_be_immutable
 class StudentDetail extends StatelessWidget {
   final int index;
-  final dataList;
-  const StudentDetail({
+  Student dataList;
+  StudentDetail({
     Key? key,
     required this.index,
-    this.dataList,
+    required this.dataList,
   }) : super(key: key);
 
   @override
@@ -39,20 +40,20 @@ class StudentDetail extends StatelessWidget {
           title: const Text(
             'Student Details',
           ),
-          actions: [
-            IconButton(
-              onPressed: () {
-                Get.to(UpdateScreen(
-                  index: index,
-                ));
-              },
-              icon: const Icon(
-                Icons.edit,
-                color: kwhite,
-                size: 30,
-              ),
-            ),
-          ],
+          // actions: [
+          //   IconButton(
+          //     onPressed: () {
+          //       Get.to(UpdateScreen(
+          //         index: index,
+          //       ));
+          //     },
+          //     icon: const Icon(
+          //       Icons.edit,
+          //       color: kwhite,
+          //       size: 30,
+          //     ),
+          //   ),
+          // ],
           centerTitle: true,
         ),
       ),
@@ -72,20 +73,20 @@ class StudentDetail extends StatelessWidget {
                     Center(
                       child: CircleAvatar(
                         backgroundImage:
-                            FileImage(File(data.list[index].studentImage!)),
+                            FileImage(File(dataList.studentImage!)),
                         radius: 100.r,
                       ),
                     ),
                     kheight20,
                     Detailswidget(
                         studentDetails:
-                            'Name${'       = ${data.list[index].studentName}'.toUpperCase()}'),
+                            'Name${'       = ${dataList.studentName}'.toUpperCase()}'),
                     kheight,
                     const DividerWidget(),
                     kheight20,
                     Detailswidget(
                         studentDetails:
-                            'Age          = ${data.list[index].studentAge}'),
+                            'Age          = ${dataList.studentAge}'),
                     kheight,
                     const DividerWidget(),
                     kheight20,
@@ -97,7 +98,7 @@ class StudentDetail extends StatelessWidget {
                     kheight20,
                     Detailswidget(
                         studentDetails:
-                            'Number   = ${data.list[index].studentPHNumber}'),
+                            'Number   = ${dataList.studentPHNumber}'),
                     kheight,
                     const DividerWidget(),
                     kheight20,
