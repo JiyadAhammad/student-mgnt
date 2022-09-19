@@ -34,7 +34,7 @@ class _SplashScreenState extends State<SplashScreen> {
       () {
         Navigator.of(context).pushReplacement(
           SlideTransitionAnimation(
-             HomeSceen(),
+            HomeSceen(),
           ),
         );
       },
@@ -84,7 +84,7 @@ class _SplashScreenState extends State<SplashScreen> {
             children: [
               const Center(
                 child: Text(
-                  'Student\n   Management ',
+                  'BROTOTYPE',
                   style: TextStyle(
                     fontWeight: FontWeight.w600,
                     fontSize: 35,

@@ -7,7 +7,6 @@ import 'package:student/constant/size/sized_box.dart';
 import 'package:student/controller/controller/student_controller.dart';
 import 'package:student/model/data_model/data_model.dart';
 import 'package:student/view/home/home_screen.dart';
-import 'package:student/view/update/update_screen.dart';
 
 // ignore: must_be_immutable
 class StudentDetail extends StatelessWidget {
@@ -58,55 +57,53 @@ class StudentDetail extends StatelessWidget {
         ),
       ),
       body: GetBuilder<StudentController>(
-          init: StudentController(),
-          builder: (data) {
-            return SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 10,
-                  vertical: 10,
-                ),
-                child: Column(
-                  // mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Center(
-                      child: CircleAvatar(
-                        backgroundImage:
-                            FileImage(File(dataList.studentImage!)),
-                        radius: 100.r,
-                      ),
-                    ),
-                    kheight20,
-                    Detailswidget(
-                        studentDetails:
-                            'Name${'       = ${dataList.studentName}'.toUpperCase()}'),
-                    kheight,
-                    const DividerWidget(),
-                    kheight20,
-                    Detailswidget(
-                        studentDetails:
-                            'Age          = ${dataList.studentAge}'),
-                    kheight,
-                    const DividerWidget(),
-                    kheight20,
-                    Detailswidget(
-                        studentDetails:
-                            'Domain   = ${data.list[index].studentDomain}'),
-                    kheight,
-                    const DividerWidget(),
-                    kheight20,
-                    Detailswidget(
-                        studentDetails:
-                            'Number   = ${dataList.studentPHNumber}'),
-                    kheight,
-                    const DividerWidget(),
-                    kheight20,
-                  ],
-                ),
+        init: StudentController(),
+        builder: (data) {
+          return SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 10,
+                vertical: 10,
               ),
-            );
-          }),
+              child: Column(
+                // mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Center(
+                    child: CircleAvatar(
+                      backgroundImage: FileImage(File(dataList.studentImage!)),
+                      radius: 100.r,
+                    ),
+                  ),
+                  kheight20,
+                  Detailswidget(
+                      studentDetails:
+                          'Name${'       = ${dataList.studentName}'.toUpperCase()}'),
+                  kheight,
+                  const DividerWidget(),
+                  kheight20,
+                  Detailswidget(
+                      studentDetails: 'Age          = ${dataList.studentAge}'),
+                  kheight,
+                  const DividerWidget(),
+                  kheight20,
+                  Detailswidget(
+                      studentDetails:
+                          'Domain   = ${data.list[index].studentDomain}'),
+                  kheight,
+                  const DividerWidget(),
+                  kheight20,
+                  Detailswidget(
+                      studentDetails: 'Number   = ${dataList.studentPHNumber}'),
+                  kheight,
+                  const DividerWidget(),
+                  kheight20,
+                ],
+              ),
+            ),
+          );
+        },
+      ),
     );
   }
 }

@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:student/constant/color/colors.dart';
 import 'package:student/constant/size/sized_box.dart';
 import 'package:student/controller/controller/student_controller.dart';
@@ -58,7 +57,7 @@ class Formwidget extends StatelessWidget {
                         backgroundImage: data.pickedimagefromGallery != null
                             ? FileImage(File(data.pickedimagefromGallery!))
                                 as ImageProvider
-                            : const AssetImage('asset/images/No-photo-m.png'),
+                            : const AssetImage('asset/images/nophoto.png'),
                         // backgroundImage: AssetImage(''),
                         backgroundColor: kblack,
                       ),
@@ -198,15 +197,13 @@ class BottomSheetWidget extends StatelessWidget {
 
 Future<void> okButtonClicked(ctx) async {
   final image =
-      stdController.pickedimagefromGallery ?? 'asset/images/No-photo-m.png';
+      stdController.pickedimagefromGallery ?? 'asset/images/nophoto.png';
   final name = nameController.text.trim();
   final age = ageController.text.trim();
   final domain = domainController.text.trim();
   final number = phoneController.text.trim();
   // final image = imagefile;
-  if (
-      // stdController.pickedimagefromGallery!.isEmpty ||
-      name.isEmpty || age.isEmpty || domain.isEmpty || number.isEmpty) {
+  if (name.isEmpty || age.isEmpty || domain.isEmpty || number.isEmpty) {
     Get.snackbar(
       'Warning',
       'All Field are Required',
