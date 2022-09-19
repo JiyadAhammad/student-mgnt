@@ -8,14 +8,16 @@ import 'package:student/constant/color/colors.dart';
 import 'package:student/constant/size/sized_box.dart';
 import 'package:student/controller/controller/image_controller.dart';
 import 'package:student/controller/controller/student_controller.dart';
+import 'package:student/main.dart';
 import 'package:student/model/data_model/data_model.dart';
 import 'package:student/view/form_widget/widget/text_form_widget.dart';
+import 'package:student/view/home/home_screen.dart';
 
 final nameController = TextEditingController();
 final ageController = TextEditingController();
 final domainController = TextEditingController();
 final phoneController = TextEditingController();
-// final controller = Get.put(ImageController());
+final stdController = Get.put(StudentController());
 // final picker = ImagePicker();
 
 //  // Pick an image
@@ -26,8 +28,9 @@ final phoneController = TextEditingController();
 final _formKey = GlobalKey<FormState>();
 
 class Formwidget extends StatelessWidget {
-  final obj;
-  const Formwidget({Key? key, required this.obj}) : super(key: key);
+  const Formwidget({
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -197,7 +200,7 @@ class Formwidget extends StatelessWidget {
                           ),
                         ),
                         onPressed: () {
-                          Get.back();
+                          Get.offAll(HomeSceen());
                         },
                         child: const Text(
                           'Cancel',
@@ -215,7 +218,7 @@ class Formwidget extends StatelessWidget {
                         ),
                         onPressed: () {
                           okButtonClicked(controller);
-                          obj.update();
+                          controller.update();
                         },
                         child: const Text(
                           'ok',
@@ -301,7 +304,7 @@ Future<void> okButtonClicked(controllerImage) async {
     );
     return;
   } else {
-    Get.back();
+    Get.offAll(() => HomeSceen());
     Get.snackbar(
       'title',
       'message',
@@ -329,15 +332,18 @@ Future<void> okButtonClicked(controllerImage) async {
       maxWidth: 250,
       margin: const EdgeInsets.only(bottom: 15),
     );
+    // final id = await studentDb.add();
+
   }
   final addStudentToDb = Student(
+    // id: ,
     studentImage: image,
     studentName: name,
     studentAge: age,
     studentDomain: domain,
     studentPHNumber: number,
   );
-  StudentController().addStudent(
+  stdController.addStudent(
     addStudentToDb,
   );
 }

@@ -6,7 +6,7 @@ import 'package:student/main.dart';
 import 'package:student/model/data_model/data_model.dart';
 
 class StudentController extends GetxController {
-  var list = <Student>[].obs;
+  var list = <Student>[];
   addStudent(Student value) async {
     final id = await studentDb.add(value);
     value.id = id;
@@ -15,6 +15,7 @@ class StudentController extends GetxController {
     log(value.studentName.toString());
     // studentDb.add(value);
     // list.value.add(value);
+    getAllStudents();
     update();
   }
 
@@ -36,5 +37,11 @@ class StudentController extends GetxController {
     await studentDb.deleteAt(index);
     list.removeAt(index);
     update();
+  }
+
+  @override
+  void onInit() {
+    getAllStudents();
+    super.onInit();
   }
 }
