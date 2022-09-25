@@ -1,16 +1,16 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:student/constant/color/colors.dart';
-import 'package:student/view/home/home_screen.dart';
-import 'package:student/view/splash/widget/animation.dart';
+
+import '../../constant/color/colors.dart';
+import '../home/home_screen.dart';
+import 'widget/animation.dart';
 
 class SplashScreen extends StatefulWidget {
-  const SplashScreen({Key? key}) : super(key: key);
+  const SplashScreen({super.key});
 
   @override
-  // ignore: library_private_types_in_public_api
-  _SplashScreenState createState() => _SplashScreenState();
+  State<SplashScreen> createState() => _SplashScreenState();
 }
 
 class _SplashScreenState extends State<SplashScreen> {
@@ -48,13 +48,13 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
+    final double height = MediaQuery.of(context).size.height;
+    final double width = MediaQuery.of(context).size.width;
 
     return Scaffold(
       backgroundColor: Colors.white,
       body: Stack(
-        children: [
+        children: <Widget>[
           AnimatedContainer(
             duration: const Duration(milliseconds: 2000),
             curve: Curves.fastLinearToSlowEaseIn,
@@ -62,26 +62,9 @@ class _SplashScreenState extends State<SplashScreen> {
             height: height,
             color: Colors.white,
           ),
-          // SingleChildScrollView(
-          //   child: Column(
-          //     children: [
-          //       const Center(
-          //         child: Text(
-          //           'Student\n   Managment',
-          //           style: TextStyle(
-          //             fontWeight: FontWeight.w600,
-          //             fontSize: 35,
-          //             color: Colors.blue,
-          //           ),
-          //         ),
-          //       ),
-          //       Lottie.asset('asset/lottie/student.json')
-          //     ],
-          //   ),
-          // ),
           Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
+            children: <Widget>[
               const Center(
                 child: Text(
                   'BROTOTYPE',
@@ -92,7 +75,9 @@ class _SplashScreenState extends State<SplashScreen> {
                   ),
                 ),
               ),
-              Lottie.asset('asset/lottie/student.json'),
+              Lottie.asset(
+                'asset/lottie/student.json',
+              ),
             ],
           )
         ],

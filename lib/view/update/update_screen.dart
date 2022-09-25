@@ -1,27 +1,25 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:student/constant/color/colors.dart';
-import 'package:student/controller/controller/student_controller.dart';
-import 'package:student/main.dart';
-import 'package:student/model/data_model/data_model.dart';
-import 'package:student/view/form_widget/form_widget.dart';
-import 'package:student/view/home/home_screen.dart';
-import 'package:student/view/home/widget/serach.dart';
-import 'package:student/widget/bottom_sheet.dart';
+import '../../constant/color/colors.dart';
+import '../../controller/controller/student_controller.dart';
+import '../../main.dart';
+import '../../model/data_model/data_model.dart';
+import '../home/home_screen.dart';
+import '../home/widget/serach.dart';
+import '../widget/bottom_sheet.dart';
 
-// ignore: must_be_immutable
+
 class UpdateScreen extends StatelessWidget {
+  UpdateScreen({super.key, required this.index, this.image});
   final int index;
-  UpdateScreen({Key? key, required this.index}) : super(key: key);
 
-  final _nameController = TextEditingController();
-  final _ageController = TextEditingController();
-  final _domainController = TextEditingController();
-  final _numberController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _ageController = TextEditingController();
+  final TextEditingController _domainController = TextEditingController();
+  final TextEditingController _numberController = TextEditingController();
 
-  File? image;
+  final File? image;
 
   @override
   Widget build(BuildContext context) {
@@ -31,24 +29,24 @@ class UpdateScreen extends StatelessWidget {
     _numberController.text = studcontroller.list[index].studentPHNumber!;
 
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('Edit student'),
-        ),
-        body: SafeArea(
-            child: ListView(
-          children: [
+      appBar: AppBar(
+        title: const Text('Edit student'),
+      ),
+      body: SafeArea(
+        child: ListView(
+          children: <Widget>[
             Padding(
               padding: const EdgeInsets.only(top: 40),
               child: GetBuilder<StudentController>(
                   init: StudentController(),
-                  builder: (data) {
+                  builder: (StudentController data) {
                     return SizedBox(
                       height: 200,
                       width: 200,
                       child: Stack(
                         clipBehavior: Clip.none,
                         fit: StackFit.expand,
-                        children: [
+                        children: <Widget>[
                           Container(
                             // height: 200,
                             // width: 200,
@@ -65,16 +63,6 @@ class UpdateScreen extends StatelessWidget {
                               shape: BoxShape.circle,
                             ),
                           ),
-                          // CircleAvatar(
-                          //   backgroundImage: stdController
-                          //               .pickedimagefromGallery ==
-                          //           null
-                          //       ? FileImage(
-                          //           File(data.list[index].studentImage!))
-                          //       : FileImage(File(data.pickedimagefromGallery!)),
-                          //   // backgroundImage: AssetImage(''),
-                          //   backgroundColor: kblack,
-                          // ),
                           Positioned(
                             bottom: 10,
                             right: 80,
@@ -88,13 +76,11 @@ class UpdateScreen extends StatelessWidget {
                                     borderRadius: BorderRadius.circular(10),
                                     side: const BorderSide(
                                       color: kwhite,
-                                      style: BorderStyle.solid,
                                       width: 2.0,
                                     ),
                                   ),
                                 );
                               },
-                              elevation: 2.0,
                               fillColor: const Color(0xFFF5F6F9),
                               padding: const EdgeInsets.all(15.0),
                               shape: const CircleBorder(),
@@ -168,7 +154,7 @@ class UpdateScreen extends StatelessWidget {
                   backgroundColor: MaterialStateProperty.all(kblack),
                 ),
                 onPressed: () {
-                  editButtonListner(context);
+                  editButtonListner();
                 },
                 child: const Text(
                   'update',
@@ -179,16 +165,18 @@ class UpdateScreen extends StatelessWidget {
               ),
             ),
           ],
-        )));
+        ),
+      ),
+    );
   }
 
-  Future<void> editButtonListner(ctx) async {
-    final imagefile = stdController.pickedimagefromGallery ??
+  Future<void> editButtonListner() async {
+    final String? imagefile = stdController.pickedimagefromGallery ??
         stdController.list[index].studentImage;
-    final domain = _domainController.text;
-    final name = _nameController.text;
-    final age = _ageController.text;
-    final phnumber = _numberController.text;
+    final String domain = _domainController.text;
+    final String name = _nameController.text;
+    final String age = _ageController.text;
+    final String phnumber = _numberController.text;
     if (name.isEmpty || age.isEmpty || domain.isEmpty || phnumber.isEmpty) {
       Get.snackbar(
         'Warning',
@@ -248,7 +236,7 @@ class UpdateScreen extends StatelessWidget {
         maxWidth: 250,
         margin: const EdgeInsets.only(bottom: 15),
       );
-      final editStudent = Student(
+      final Student editStudent = Student(
         id: studcontroller.list[index].id,
         studentImage: imagefile,
         studentName: name,
@@ -258,28 +246,6 @@ class UpdateScreen extends StatelessWidget {
       );
       studcontroller.updateStudent(editStudent, index);
     }
-    //  } else {
-    //   final editStudent = Student(
-    //     id: studcontroller.list[index].id,
-    //     studentImage: imagefile,
-    //     studentName: name,
-    //     studentAge: age,
-    //     studentDomain: domain,
-    //     studentPHNumber: phnumber,
-    //   );
-    // final editStudent = Student(
-    //     id: controller.list[index].id,
-    //     name: name,
-    //     image: imagefile,
-    //     age: age,
-    //     domain: branch,
-    //     phnumber: year);
-    // Get.snackbar('✅', 'Added successfull',
-    //     snackPosition: SnackPosition.BOTTOM,
-    //     colorText: Colors.green,
-    //     backgroundColor: Colors.black);
-    // studcontroller.updateStudent(editStudent, index);
-
     _nameController.clear();
     _ageController.clear();
     _domainController.clear();

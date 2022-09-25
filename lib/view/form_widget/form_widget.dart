@@ -2,19 +2,19 @@ import 'dart:async';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:student/constant/color/colors.dart';
-import 'package:student/constant/size/sized_box.dart';
-import 'package:student/controller/controller/student_controller.dart';
-import 'package:student/main.dart';
-import 'package:student/model/data_model/data_model.dart';
-import 'package:student/view/form_widget/widget/text_form_widget.dart';
-import 'package:student/view/home/home_screen.dart';
-import 'package:student/widget/bottom_sheet.dart';
+import '../../constant/color/colors.dart';
+import '../../constant/size/sized_box.dart';
+import '../../controller/controller/student_controller.dart';
+import '../../main.dart';
+import '../../model/data_model/data_model.dart';
+import '../home/home_screen.dart';
+import '../widget/bottom_sheet.dart';
+import 'widget/text_form_widget.dart';
 
-final nameController = TextEditingController();
-final ageController = TextEditingController();
-final domainController = TextEditingController();
-final phoneController = TextEditingController();
+final TextEditingController nameController = TextEditingController();
+final TextEditingController ageController = TextEditingController();
+final TextEditingController domainController = TextEditingController();
+final TextEditingController phoneController = TextEditingController();
 
 File? image;
 
@@ -24,9 +24,7 @@ File? image;
 //     final XFile? photo = await picker.pickImage(source: ImageSource.camera);
 
 class Formwidget extends StatelessWidget {
-  const Formwidget({
-    Key? key,
-  }) : super(key: key);
+  const Formwidget({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -43,16 +41,16 @@ class Formwidget extends StatelessWidget {
         child: SingleChildScrollView(
           child: GetBuilder<StudentController>(
             init: StudentController(),
-            builder: (data) => Column(
+            builder: (StudentController data) => Column(
               mainAxisAlignment: MainAxisAlignment.end,
-              children: [
+              children: <Widget>[
                 SizedBox(
                   height: 200,
                   width: 200,
                   child: Stack(
                     clipBehavior: Clip.none,
                     fit: StackFit.expand,
-                    children: [
+                    children: <Widget>[
                       CircleAvatar(
                         backgroundImage: data.pickedimagefromGallery != null
                             ? FileImage(File(data.pickedimagefromGallery!))
@@ -74,13 +72,11 @@ class Formwidget extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(10),
                                 side: const BorderSide(
                                   color: kwhite,
-                                  style: BorderStyle.solid,
                                   width: 2.0,
                                 ),
                               ),
                             );
                           },
-                          elevation: 2.0,
                           fillColor: const Color(0xFFF5F6F9),
                           padding: const EdgeInsets.all(15.0),
                           shape: const CircleBorder(),
@@ -102,7 +98,7 @@ class Formwidget extends StatelessWidget {
                 kheight,
                 TextFormWidget(
                   prefixIcon: Icons.numbers,
-                  keyboardType: const TextInputType.numberWithOptions(),
+                  keyboardType: TextInputType.number,
                   hintText: 'Enter Age',
                   controller: ageController,
                 ),
@@ -115,14 +111,14 @@ class Formwidget extends StatelessWidget {
                 kheight,
                 TextFormWidget(
                   prefixIcon: Icons.phone_android,
-                  keyboardType: const TextInputType.numberWithOptions(),
+                  keyboardType: TextInputType.number,
                   hintText: 'Phone No :',
                   controller: phoneController,
                 ),
                 kheight20,
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
+                  children: <Widget>[
                     SizedBox(
                       width: 150,
                       child: ElevatedButton(
@@ -149,7 +145,7 @@ class Formwidget extends StatelessWidget {
                           ),
                         ),
                         onPressed: () {
-                          okButtonClicked(context);
+                          okButtonClicked();
                           // controller.update();
                         },
                         child: const Text(
@@ -169,13 +165,13 @@ class Formwidget extends StatelessWidget {
 }
 
 class BottomSheetWidget extends StatelessWidget {
-  final IconData icon;
-  final String nameIcon;
   const BottomSheetWidget({
-    Key? key,
+    super.key,
     required this.icon,
     required this.nameIcon,
-  }) : super(key: key);
+  });
+  final IconData icon;
+  final String nameIcon;
 
   @override
   Widget build(BuildContext context) {
@@ -195,13 +191,13 @@ class BottomSheetWidget extends StatelessWidget {
   }
 }
 
-Future<void> okButtonClicked(ctx) async {
-  final image =
+Future<void> okButtonClicked() async {
+  final String image =
       stdController.pickedimagefromGallery ?? 'asset/images/nophoto.png';
-  final name = nameController.text.trim();
-  final age = ageController.text.trim();
-  final domain = domainController.text.trim();
-  final number = phoneController.text.trim();
+  final String name = nameController.text.trim();
+  final String age = ageController.text.trim();
+  final String domain = domainController.text.trim();
+  final String number = phoneController.text.trim();
   // final image = imagefile;
   if (name.isEmpty || age.isEmpty || domain.isEmpty || number.isEmpty) {
     Get.snackbar(
@@ -232,7 +228,7 @@ Future<void> okButtonClicked(ctx) async {
       margin: const EdgeInsets.only(bottom: 15),
     );
   } else {
-    final addStudentToDb = Student(
+    final Student addStudentToDb = Student(
       // id: ,
       studentImage: image,
       studentName: name,

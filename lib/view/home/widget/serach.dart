@@ -2,16 +2,17 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
-import 'package:student/constant/color/colors.dart';
-import 'package:student/controller/controller/student_controller.dart';
-import 'package:student/view/student_details/student_details.dart';
+import '../../../constant/color/colors.dart';
+import '../../../controller/controller/student_controller.dart';
+import '../../../model/data_model/data_model.dart';
+import '../../student_details/student_details.dart';
 
-final studcontroller = Get.put(StudentController());
+final StudentController studcontroller = Get.put(StudentController());
 
-class Search extends SearchDelegate {
+class Search extends SearchDelegate<dynamic> {
   @override
   List<Widget>? buildActions(BuildContext context) {
-    return [
+    return <Widget>[
       IconButton(
         onPressed: () {
           if (query.isEmpty) {
@@ -41,9 +42,9 @@ class Search extends SearchDelegate {
 
   @override
   Widget buildResults(BuildContext context) {
-    final searched = studcontroller.list
+    final List<Student> searched = studcontroller.list
         .where(
-          (element) => element.studentName!.toLowerCase().contains(
+          (Student element) => element.studentName!.toLowerCase().contains(
                 query.toLowerCase(),
               ),
         )
@@ -53,7 +54,7 @@ class Search extends SearchDelegate {
       backgroundColor: kwhite,
       body: searched.isEmpty
           ? ListView(
-              children: [
+              children: <Widget>[
                 Center(
                   child: Lottie.asset(
                     'asset/lottie/emptyfile.json',
@@ -61,7 +62,7 @@ class Search extends SearchDelegate {
                 ),
                 const Center(
                   child: Text(
-                    "No Data Found!! 😟",
+                    'No Data Found!! 😟',
                     style: TextStyle(
                       color: kblack,
                       fontSize: 30,
@@ -79,7 +80,7 @@ class Search extends SearchDelegate {
               child: ListView.separated(
                 physics: const BouncingScrollPhysics(),
                 shrinkWrap: true,
-                itemBuilder: (context, index) {
+                itemBuilder: (BuildContext context, int index) {
                   return Container(
                     decoration: BoxDecoration(
                       color: kwhite,
@@ -124,8 +125,8 @@ class Search extends SearchDelegate {
                   );
                 },
                 separatorBuilder: (
-                  context,
-                  index,
+                  BuildContext context,
+                  int index,
                 ) {
                   return const Divider(
                     height: 20,
@@ -140,9 +141,9 @@ class Search extends SearchDelegate {
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    final searched = studcontroller.list
+    final List<Student> searched = studcontroller.list
         .where(
-          (element) => element.studentName!.toLowerCase().contains(
+          (Student element) => element.studentName!.toLowerCase().contains(
                 query.toLowerCase(),
               ),
         )
@@ -152,7 +153,7 @@ class Search extends SearchDelegate {
       backgroundColor: kwhite,
       body: searched.isEmpty
           ? ListView(
-              children: [
+              children: <Widget>[
                 Center(
                   child: Lottie.asset(
                     'asset/lottie/emptyfile.json',
@@ -160,7 +161,7 @@ class Search extends SearchDelegate {
                 ),
                 const Center(
                   child: Text(
-                    "No Data Found!! 😟",
+                    'No Data Found!! 😟',
                     style: TextStyle(
                       color: kblack,
                       fontSize: 30,
@@ -178,7 +179,7 @@ class Search extends SearchDelegate {
               child: ListView.separated(
                 physics: const BouncingScrollPhysics(),
                 shrinkWrap: true,
-                itemBuilder: (context, index) {
+                itemBuilder: (BuildContext context, int index) {
                   return Container(
                     decoration: BoxDecoration(
                       color: kwhite,
@@ -223,8 +224,8 @@ class Search extends SearchDelegate {
                   );
                 },
                 separatorBuilder: (
-                  context,
-                  index,
+                  BuildContext context,
+                  int index,
                 ) {
                   return const Divider(
                     height: 20,

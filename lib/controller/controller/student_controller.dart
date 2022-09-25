@@ -1,9 +1,7 @@
-import 'dart:developer';
-
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:student/main.dart';
-import 'package:student/model/data_model/data_model.dart';
+import '../../main.dart';
+import '../../model/data_model/data_model.dart';
 
 class StudentController extends GetxController {
   @override
@@ -17,26 +15,28 @@ class StudentController extends GetxController {
 
   String? pickedImage;
   String? pickedimagefromGallery;
-  var list = <Student>[];
+  List<Student> list = <Student>[];
 
-  getCamera() async {
-    final images = await ImagePicker().pickImage(source: ImageSource.camera);
+  Future<void> getCamera() async {
+    final XFile? images =
+        await ImagePicker().pickImage(source: ImageSource.camera);
 
     pickedimagefromGallery = images!.path;
     update();
   }
 
-  getGallery() async {
-    final images = await ImagePicker().pickImage(source: ImageSource.gallery);
-  
+  Future<void> getGallery() async {
+    final XFile? images =
+        await ImagePicker().pickImage(source: ImageSource.gallery);
+
     pickedimagefromGallery = images!.path;
 
     update();
   }
 
-  addStudentList(Student data) async {
-    final id = await studentDb.add(data);
-    final studentdata = Student(
+  Future<void> addStudentList(Student data) async {
+    final int id = await studentDb.add(data);
+    final Student studentdata = Student(
       id: id,
       studentImage: data.studentImage,
       studentName: data.studentName,
@@ -46,23 +46,17 @@ class StudentController extends GetxController {
     );
 
     await studentDb.put(id, studentdata);
-
     list.add(studentdata);
-
     update();
-    log(id.toString());
-    log(list.toList().toString());
-    log(data.studentAge!);
   }
 
-  deleteStudent(int id, int index) {
+  void deleteStudent(int id, int index) {
     studentDb.delete(id);
     list.removeAt(index);
     update();
-    print(index.toString());
   }
 
-  updateStudent(Student editStudent, int index) async {
+  Future<void> updateStudent(Student editStudent, int index) async {
     await studentDb.put(stdController.list[index].id, editStudent);
     list.removeAt(index);
     list.insert(index, editStudent);

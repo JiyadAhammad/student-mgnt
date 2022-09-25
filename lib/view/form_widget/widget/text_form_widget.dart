@@ -2,19 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class TextFormWidget extends StatelessWidget {
-  final IconData prefixIcon;
-  final String hintText;
-  final TextInputType keyboardType;
-  final TextEditingController controller;
-  final List<TextInputFormatter>? inputFormatters;
   const TextFormWidget({
-    Key? key,
+    super.key,
     required this.prefixIcon,
     required this.hintText,
     this.keyboardType = TextInputType.name,
     required this.controller,
     this.inputFormatters,
-  }) : super(key: key);
+  });
+  final IconData prefixIcon;
+  final String hintText;
+  final TextInputType keyboardType;
+  final TextEditingController controller;
+  final List<TextInputFormatter>? inputFormatters;
 
   @override
   Widget build(BuildContext context) {
@@ -34,10 +34,11 @@ class TextFormWidget extends StatelessWidget {
       ),
       // validator: validator,
       inputFormatters: inputFormatters,
-      validator: (value) {
+      validator: (String? value) {
         if (value == null) {
           return 'Field Cannot be Empty';
         }
+        return null;
       },
     );
   }

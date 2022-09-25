@@ -3,18 +3,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
-import 'package:student/constant/color/colors.dart';
-import 'package:student/controller/controller/student_controller.dart';
-import 'package:student/view/form_widget/form_widget.dart';
-import 'package:student/view/home/widget/serach.dart';
-import 'package:student/view/student_details/student_details.dart';
-import 'package:student/view/update/update_screen.dart';
 
-// ignore: must_be_immutable
+import '../../constant/color/colors.dart';
+import '../../controller/controller/student_controller.dart';
+import '../form_widget/form_widget.dart';
+import '../student_details/student_details.dart';
+import '../update/update_screen.dart';
+import 'widget/serach.dart';
+
 class HomeSceen extends StatelessWidget {
-  HomeSceen({Key? key}) : super(key: key);
+  HomeSceen({super.key});
 
-  StudentController studentController = Get.put(StudentController());
+  final StudentController studentController = Get.put(StudentController());
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,7 @@ class HomeSceen extends StatelessWidget {
             'Home',
           ),
           centerTitle: true,
-          actions: [
+          actions: <Widget>[
             IconButton(
               padding: EdgeInsets.zero,
               onPressed: () {
@@ -45,7 +45,7 @@ class HomeSceen extends StatelessWidget {
               padding: EdgeInsets.zero,
               onPressed: () {
                 Get.to(
-                  () => Formwidget(),
+                  () => const Formwidget(),
                   transition: Transition.zoom,
                   duration: const Duration(
                     milliseconds: 1000,
@@ -61,16 +61,16 @@ class HomeSceen extends StatelessWidget {
       ),
       body: GetBuilder<StudentController>(
         init: StudentController(),
-        builder: (stdobj) {
+        builder: (StudentController stdobj) {
           // log('${studentControllerList.list.length} this is the lenth');
           return stdobj.list.isNotEmpty
               ? ListView.separated(
                   physics: const BouncingScrollPhysics(),
                   itemCount: stdobj.list.length,
-                  separatorBuilder: (context, index) {
+                  separatorBuilder: (BuildContext context, int index) {
                     return const SizedBox();
                   },
-                  itemBuilder: (context, index) {
+                  itemBuilder: (BuildContext context, int index) {
                     // log('${studentController.list[index].studentName!} this log from home screen');
                     return Padding(
                       padding: EdgeInsets.only(
@@ -125,7 +125,7 @@ class HomeSceen extends StatelessWidget {
                             style: TextStyle(color: kgrey),
                           ),
                           trailing: Wrap(
-                            children: [
+                            children: <Widget>[
                               IconButton(
                                 padding: EdgeInsets.zero,
                                 onPressed: () {
@@ -221,7 +221,7 @@ class HomeSceen extends StatelessWidget {
                   },
                 )
               : ListView(
-                  children: [
+                  children: <Widget>[
                     Center(
                       child: Lottie.asset(
                         'asset/lottie/emptyfile.json',
@@ -229,7 +229,7 @@ class HomeSceen extends StatelessWidget {
                     ),
                     const Center(
                       child: Text(
-                        "No Data Found!! 😟",
+                        'No Data Found!! 😟',
                         style: TextStyle(
                           color: kwhite,
                           fontSize: 30,

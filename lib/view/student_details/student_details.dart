@@ -2,21 +2,21 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:student/constant/color/colors.dart';
-import 'package:student/constant/size/sized_box.dart';
-import 'package:student/controller/controller/student_controller.dart';
-import 'package:student/model/data_model/data_model.dart';
-import 'package:student/view/home/home_screen.dart';
 
-// ignore: must_be_immutable
+import '../../constant/color/colors.dart';
+import '../../constant/size/sized_box.dart';
+import '../../controller/controller/student_controller.dart';
+import '../../model/data_model/data_model.dart';
+import '../home/home_screen.dart';
+
 class StudentDetail extends StatelessWidget {
-  final int index;
-  Student dataList;
-  StudentDetail({
-    Key? key,
+  const StudentDetail({
+    super.key,
     required this.index,
     required this.dataList,
-  }) : super(key: key);
+  });
+  final int index;
+  final Student dataList;
 
   @override
   Widget build(BuildContext context) {
@@ -39,26 +39,12 @@ class StudentDetail extends StatelessWidget {
           title: const Text(
             'Student Details',
           ),
-          // actions: [
-          //   IconButton(
-          //     onPressed: () {
-          //       Get.to(UpdateScreen(
-          //         index: index,
-          //       ));
-          //     },
-          //     icon: const Icon(
-          //       Icons.edit,
-          //       color: kwhite,
-          //       size: 30,
-          //     ),
-          //   ),
-          // ],
           centerTitle: true,
         ),
       ),
       body: GetBuilder<StudentController>(
         init: StudentController(),
-        builder: (data) {
+        builder: (StudentController data) {
           return SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.symmetric(
@@ -68,7 +54,7 @@ class StudentDetail extends StatelessWidget {
               child: Column(
                 // mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
+                children: <Widget>[
                   Center(
                     child: CircleAvatar(
                       backgroundImage: FileImage(File(dataList.studentImage!)),
@@ -109,11 +95,11 @@ class StudentDetail extends StatelessWidget {
 }
 
 class Detailswidget extends StatelessWidget {
-  final String studentDetails;
   const Detailswidget({
-    Key? key,
+    super.key,
     required this.studentDetails,
-  }) : super(key: key);
+  });
+  final String studentDetails;
 
   @override
   Widget build(BuildContext context) {
@@ -135,9 +121,7 @@ class Detailswidget extends StatelessWidget {
 }
 
 class DividerWidget extends StatelessWidget {
-  const DividerWidget({
-    Key? key,
-  }) : super(key: key);
+  const DividerWidget({super.key});
 
   @override
   Widget build(BuildContext context) {

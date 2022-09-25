@@ -3,6 +3,14 @@ part 'data_model.g.dart';
 
 @HiveType(typeId: 1)
 class Student extends HiveObject {
+  Student({
+    this.id,
+    required this.studentImage,
+    required this.studentName,
+    required this.studentAge,
+    required this.studentDomain,
+    required this.studentPHNumber,
+  });
   @HiveField(0)
   int? id;
 
@@ -20,13 +28,4 @@ class Student extends HiveObject {
 
   @HiveField(5)
   final String? studentPHNumber;
-
-  Student({
-    this.id,
-    required this.studentImage,
-    required this.studentName,
-    required this.studentAge,
-    required this.studentDomain,
-    required this.studentPHNumber,
-  });
 }

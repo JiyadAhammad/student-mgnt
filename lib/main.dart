@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/adapters.dart';
-import 'package:student/controller/controller/student_controller.dart';
-import 'package:student/model/data_model/data_model.dart';
-import 'package:student/view/splash/splash_screen.dart';
+import 'controller/controller/student_controller.dart';
+import 'model/data_model/data_model.dart';
+import 'view/splash/splash_screen.dart';
+
 
 late Box<Student> studentDb;
-final stdController = Get.put(StudentController());
+final StudentController stdController = Get.put(StudentController());
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
@@ -17,15 +18,14 @@ Future<void> main() async {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      designSize: const Size(360, 690),
       minTextAdapt: true,
       splitScreenMode: true,
-      builder: (context, child) {
+      builder: (BuildContext context, Widget? child) {
         return GetMaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'Flutter Demo',

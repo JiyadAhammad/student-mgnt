@@ -1,20 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:student/constant/color/colors.dart';
-import 'package:student/controller/controller/student_controller.dart';
+
+import '../../constant/color/colors.dart';
+import '../../controller/controller/student_controller.dart';
 
 class ImageBottomSheet extends StatelessWidget {
-  const ImageBottomSheet({
-    Key? key,
-  }) : super(key: key);
+  const ImageBottomSheet({super.key});
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: 120,
       child: Wrap(
-        direction: Axis.horizontal,
-        children: [
+        children: <Widget>[
           ListTile(
             onTap: () async {
               Get.find<StudentController>().getCamera();
